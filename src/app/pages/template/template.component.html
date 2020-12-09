@@ -60,7 +60,25 @@
       <small *ngIf="correo.invalid && correo.touched"
               class="form-text text-danger">El correo es obligatorio
       </small>
+    </div>
   </div>
+
+  <div class="form-group row">
+    <label class="col-2 col-form-label">País</label>
+    <div class="col-8">
+      <select class="form-control"
+              name="pais"
+              [disabled]="paises.length === 0"
+              [ngModel]="usuario.pais"
+              #pais="ngModel"
+              [class.is-invalid]="pais.invalid && pais.touched"
+              required>
+      <option *ngFor="let pais of paises" [value]="pais.codigo">{{ pais.nombre }}</option>
+      </select>
+       <small *ngIf="pais.invalid && pais.touched"
+              class="form-text text-danger">Debe seleccionar un país
+      </small>
+    </div>
   </div>
 
 

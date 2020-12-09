@@ -9,19 +9,21 @@ import { PaisService } from 'src/app/services/pais.service';
 })
 export class TemplateComponent implements OnInit {
   
-  // usuario = {
-  //   nombre: '',
-  //   apellido: '',
-  //   email: ''
-  // };
-
   usuario = {
-    nombre: 'Sheev',
-    apellido: 'Palpatine',
-    email: 'iamthesenate@sith.com'
+    nombre: '',
+    apellido: '',
+    email: '',
+    pais: ''
   };
 
-  
+  // usuario = {
+  //   nombre: 'Sheev',
+  //   apellido: 'Palpatine',
+  //   email: 'iamthesenate@sith.com',
+  //   pais: 'ARG'
+  // };
+
+  paises: any[] = [];
 
   constructor(private paisService: PaisService) { }
 
@@ -29,6 +31,11 @@ export class TemplateComponent implements OnInit {
     this.paisService.getPaises()
       .subscribe( paises => {
         console.log(paises);
+        this.paises = paises;
+        this.paises.unshift({
+          nombre: 'Seleccione un país',
+          codigo: ''
+        });
       });
   }
 
