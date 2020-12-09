@@ -9,19 +9,21 @@ import { PaisService } from 'src/app/services/pais.service';
 })
 export class TemplateComponent implements OnInit {
   
-  usuario = {
-    nombre: '',
-    apellido: '',
-    email: '',
-    pais: ''
-  };
-
   // usuario = {
-  //   nombre: 'Sheev',
-  //   apellido: 'Palpatine',
-  //   email: 'iamthesenate@sith.com',
-  //   pais: 'ARG'
+  //   nombre: '',
+  //   apellido: '',
+  //   email: '',
+  //   pais: '',
+  //   genero: ''
   // };
+
+  usuario = {
+    nombre: 'Sheev',
+    apellido: 'Palpatine',
+    email: 'iamthesenate@sith.com',
+    pais: 'ARG',
+    genero: 'M'
+  };
 
   paises: any[] = [];
 
