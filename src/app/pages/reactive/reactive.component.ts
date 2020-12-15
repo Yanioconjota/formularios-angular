@@ -17,6 +17,18 @@ export class ReactiveComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  get nombreNoValido(){
+    return this.forma.get('nombre').invalid && this.forma.get('nombre').touched;
+  }
+
+  get apellidoNoValido() {
+    return this.forma.get('apellido').invalid && this.forma.get('apellido').touched;
+  }
+
+  get emailNoValido() {
+    return this.forma.get('email').invalid && this.forma.get('email').touched;
+  }
+
   crearFormulario(){
     this.forma = this.fb.group({
       //1 arg = value, 2 = validador síncrono
@@ -32,6 +44,14 @@ export class ReactiveComponent implements OnInit {
 
   guardar(){
     console.log(this.forma);
+    if (this.forma.invalid) {
+      console.log(this.forma.value);
+      console.log('debes llenar el formulario correctamente!');
+      this.forma.markAllAsTouched();
+      return Object.values(this.forma.controls).forEach(control => {
+        control.markAllAsTouched();
+      });
+    }
   }
 
 }

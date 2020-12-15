@@ -12,7 +12,10 @@
                type="text"
                name="nombre"
                placeholder="Nombre"
-               formControlName="nombre">
+               formControlName="nombre"
+               [class.is-invalid]="nombreNoValido">
+        <small class="text-danger"
+               *ngIf="nombreNoValido">Ingrese al menos 3 caractéres</small>
       </div>
     </div>
 
@@ -24,7 +27,10 @@
                type="text"
                name="apellido"
                placeholder="Apellido"
-               formControlName="apellido">
+               formControlName="apellido"
+               [class.is-invalid]="apellidoNoValido">
+        <small class="text-danger"
+               *ngIf="apellidoNoValido">Ingrese al menos 3 caractéres</small>
       </div>
     </div>
 
@@ -38,7 +44,10 @@
              type="email"
              name="email"
              placeholder="Correo electrónico"
-             formControlName="email">
+             formControlName="email"
+             [class.is-invalid]="emailNoValido">
+      <small class="text-danger"
+              *ngIf="emailNoValido">Ingrese un email válido</small>
     </div>
   </div>
 
@@ -56,7 +65,7 @@
 </form>
 
 <hr>
-<pre [ngClass]="{'text-danger border-danger' : forma.status === 'INVALID',
+<pre [ngClass]="{'text-danger border-danger' : forma.status === 'INVALID' && forma.touched,
      'text-info border-success' : forma.status === 'VALID'}"
      class="bg-light border rounded text-dark p-3 mt-5">
   Estado del formulario: {{ forma.valid }}
@@ -64,7 +73,7 @@
   Status: {{ forma.status }}
 </pre>
 
-<pre [ngClass]="{'text-danger border-danger' : forma.status === 'INVALID',
+<pre [ngClass]="{'text-danger border-danger' : forma.status === 'INVALID' && forma.touched,
      'text-success border-success' : forma.status === 'VALID'}"
      class="bg-light border rounded text-dark p-3">
   {{ forma.value | json }}
