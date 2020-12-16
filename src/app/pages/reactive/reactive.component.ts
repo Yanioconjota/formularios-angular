@@ -29,12 +29,25 @@ export class ReactiveComponent implements OnInit {
     return this.forma.get('email').invalid && this.forma.get('email').touched;
   }
 
+  get distritoNoValido() {
+    return this.forma.get('direccion.distrito').invalid && this.forma.get('direccion.distrito').touched;
+  }
+
+  get ciudadNoValida() {
+    return this.forma.get('direccion.ciudad').invalid && this.forma.get('direccion.ciudad').touched;
+  }
+
   crearFormulario(){
+    //fb o FormBuilder arma el formulario en el componente
     this.forma = this.fb.group({
       //1 arg = value, 2 = validador síncrono
-      nombre:   ['', [ Validators.required, Validators.minLength(3) ]],
-      apellido: ['', [ Validators.required, Validators.minLength(3) ]],
-      email: ['', [Validators.required, Validators.pattern('[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$') ]]
+      nombre:    ['', [ Validators.required, Validators.minLength(3) ]],
+      apellido:  ['', [ Validators.required, Validators.minLength(3) ]],
+      email:     ['', [Validators.required, Validators.pattern('[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$') ]],
+      direccion: this.fb.group({
+        distrito: ['', Validators.required],
+        ciudad:   ['', Validators.required],
+      })
     });
    //     nombre:   ['Sheev', [ Validators.required, Validators.minLength(3) ]],
    //     apellido: ['Palpatine', [ Validators.required, Validators.minLength(3) ]],
@@ -47,7 +60,7 @@ export class ReactiveComponent implements OnInit {
     if (this.forma.invalid) {
       console.log(this.forma.value);
       console.log('debes llenar el formulario correctamente!');
-      this.forma.markAllAsTouched();
+      //this.forma.markAllAsTouched();
       return Object.values(this.forma.controls).forEach(control => {
         control.markAllAsTouched();
       });
