@@ -12,6 +12,7 @@ export class ReactiveComponent implements OnInit {
 
   constructor( private fb:FormBuilder) {
     this.crearFormulario();
+    this.cargarFormulario();
   }
 
   ngOnInit(): void {
@@ -55,16 +56,45 @@ export class ReactiveComponent implements OnInit {
    //   });
   }
 
+  cargarFormulario(){
+    this.forma.setValue({
+      nombre: 'Sheev',
+      apellido: 'Palpatine',
+      email: 'iamthesenate@sith.com',
+      direccion: {
+        distrito: 'Naboo',
+        ciudad: 'Quilmes'
+      }
+    });
+  }
+
   guardar(){
     console.log(this.forma);
+    // if (this.forma.invalid) {
+    //   console.log(this.forma.value);
+    //   console.log('debes llenar el formulario correctamente!');
+    //   //this.forma.markAllAsTouched();
+    //   return Object.values(this.forma.controls).forEach(control => {
+    //     control.markAllAsTouched();
+    //   });
+    // }
     if (this.forma.invalid) {
-      console.log(this.forma.value);
-      console.log('debes llenar el formulario correctamente!');
-      //this.forma.markAllAsTouched();
-      return Object.values(this.forma.controls).forEach(control => {
-        control.markAllAsTouched();
+      return Object.values( this.forma.controls ).forEach( control => {
+        if (control instanceof FormGroup) {
+          Object.values( control.controls ).forEach( control => control.markAsTouched());
+        } else {
+          control.markAsTouched();
+        }
       });
     }
+    //Después del posteo del formulario, lo reseteamos
+    //this.forma.reset();
+    //El método reset no borra el formulario, reinicia su estado y puede asignar los valores indicados, el resto los llenaría en null sin considerarlo un error.
+    this.forma.reset({
+      nombre: 'Sheev',
+      apellido: 'Palpatine',
+      email: 'iamthesenate@sith.com'
+    });
   }
 
 }
