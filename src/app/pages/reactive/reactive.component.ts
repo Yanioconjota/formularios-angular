@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-reactive',
@@ -16,6 +16,10 @@ export class ReactiveComponent implements OnInit {
   }
 
   ngOnInit(): void {
+  }
+
+  get pasatiempos(){
+    return this.forma.get('pasatiempos') as FormArray;
   }
 
   get nombreNoValido(){
@@ -48,16 +52,16 @@ export class ReactiveComponent implements OnInit {
       direccion: this.fb.group({
         distrito: ['', Validators.required],
         ciudad:   ['', Validators.required],
-      })
+      }),
+      pasatiempos: this.fb.array([
+        
+      ])
     });
-   //     nombre:   ['Sheev', [ Validators.required, Validators.minLength(3) ]],
-   //     apellido: ['Palpatine', [ Validators.required, Validators.minLength(3) ]],
-   //     email:    ['iamthesenate@sith.com', [Validators.required, Validators.pattern('[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$') ]]
-   //   });
   }
 
   cargarFormulario(){
-    this.forma.setValue({
+    // this.forma.setValue({
+    this.forma.reset({
       nombre: 'Sheev',
       apellido: 'Palpatine',
       email: 'iamthesenate@sith.com',
@@ -66,18 +70,21 @@ export class ReactiveComponent implements OnInit {
         ciudad: 'Quilmes'
       }
     });
+    ['Política', 'Leyes', 'Estudio de Holocrones'].forEach(
+      valor => this.pasatiempos.push(this.fb.control(valor))
+    );
+  }
+
+  agregarPasatiempo(){
+    this.pasatiempos.push( this.fb.control('') );
+  }
+
+  borrarPasatiempo(i: number){
+    this.pasatiempos.removeAt(i);
   }
 
   guardar(){
     console.log(this.forma);
-    // if (this.forma.invalid) {
-    //   console.log(this.forma.value);
-    //   console.log('debes llenar el formulario correctamente!');
-    //   //this.forma.markAllAsTouched();
-    //   return Object.values(this.forma.controls).forEach(control => {
-    //     control.markAllAsTouched();
-    //   });
-    // }
     if (this.forma.invalid) {
       return Object.values( this.forma.controls ).forEach( control => {
         if (control instanceof FormGroup) {
@@ -95,6 +102,10 @@ export class ReactiveComponent implements OnInit {
       apellido: 'Palpatine',
       email: 'iamthesenate@sith.com'
     });
+  }
+
+  reset(){
+    this.forma.reset();
   }
 
 }
