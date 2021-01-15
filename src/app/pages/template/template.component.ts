@@ -57,4 +57,24 @@ export class TemplateComponent implements OnInit {
     }
   }
 
+  reset(): void {
+    this.usuario = {
+      nombre: 'Sheev',
+      apellido: 'Palpatine',
+      email: 'iamthesenate@sith.com',
+      pais: 'ARG',
+      genero: 'M'
+    };
+  }
+
+  clear(): void {
+    this.usuario = {
+      nombre: '',
+      apellido: '',
+      email: '',
+      pais: '',
+      genero: ''
+    };
+  }
+
 }
