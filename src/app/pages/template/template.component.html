@@ -120,10 +120,10 @@
       <button type="submit" class="btn btn-outline-primary">
         Guardar
       </button>
-      <button type="button" (click)="clear()" class="btn btn-outline-dark">
+      <button type="button" (click)="clear()" class="btn btn-outline-danger">
         Clear
       </button>
-      <button type="button" (click)="reset()" class="btn btn-outline-danger">
+      <button type="button" (click)="reset()" class="btn btn-outline-dark">
         Reset
       </button>
     </div>
@@ -132,7 +132,7 @@
 </form>
 
 <hr>
-<pre [ngClass]="{'text-danger border-danger' : forma.status === 'INVALID' && forma.touched,
+<pre [ngClass]="{'text-danger border-danger' : forma.status === 'INVALID',
      'text-info border-success' : forma.status === 'VALID'}"
      class="bg-light border rounded text-dark p-3 mt-5">
   Estado del formulario: {{ forma.valid }}
@@ -140,7 +140,7 @@
   Status: {{ forma.status }}
 </pre>
 
-<pre [ngClass]="{'text-danger border-danger' : forma.status === 'INVALID' && forma.touched,
+<pre [ngClass]="{'text-danger border-danger' : forma.status === 'INVALID',
      'text-success border-success' : forma.status === 'VALID'}"
      class="bg-light border rounded text-dark p-3">
   {{ forma.value | json }}
