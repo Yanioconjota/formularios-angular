@@ -45,10 +45,11 @@ export class ReactiveComponent implements OnInit {
   crearFormulario(){
     //fb o FormBuilder arma el formulario en el componente
     this.forma = this.fb.group({
-      //1 arg = value, 2 = validador síncrono
+      //1 arg = value, 2 = validadores síncronos (En array si son mas de uno), 3 = validadores asíncronos
       nombre:    ['', [ Validators.required, Validators.minLength(3) ]],
       apellido:  ['', [ Validators.required, Validators.minLength(3) ]],
       email:     ['', [Validators.required, Validators.pattern('[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$') ]],
+      //dirección es un objeto anidado dentro del formulario
       direccion: this.fb.group({
         distrito: ['', Validators.required],
         ciudad:   ['', Validators.required],
@@ -75,6 +76,20 @@ export class ReactiveComponent implements OnInit {
     );
   }
 
+  llenarFormulario() {
+    // this.forma.reset({
+    this.forma.setValue({
+      nombre: 'Sheev',
+      apellido: 'Palpatine',
+      email: 'iamthesenate@sith.com',
+      direccion: {
+        distrito: 'Naboo',
+        ciudad: 'Quilmes'
+      },
+      pasatiempos: ['Política', 'Leyes', 'Estudio de Holocrones']
+    });
+  }
+
   agregarPasatiempo(){
     this.pasatiempos.push( this.fb.control('') );
   }
@@ -86,7 +101,9 @@ export class ReactiveComponent implements OnInit {
   guardar(){
     console.log(this.forma);
     if (this.forma.invalid) {
+      //Se itera con el obejeto forma para marcar todos los inputs como touched si el formulario es inválido
       return Object.values( this.forma.controls ).forEach( control => {
+        //Si hay un objeto anidado preguntamos si ese control es una instancia de FormGroup, de ser así iteramos y marcamos cada uno de sus controles como touched
         if (control instanceof FormGroup) {
           Object.values( control.controls ).forEach( control => control.markAsTouched());
         } else {
