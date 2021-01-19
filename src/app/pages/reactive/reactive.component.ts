@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ValidadoresService } from 'src/app/services/validadores.service';
 
 @Component({
   selector: 'app-reactive',
@@ -10,7 +11,8 @@ export class ReactiveComponent implements OnInit {
 
   forma: FormGroup;
 
-  constructor( private fb:FormBuilder) {
+  constructor(private fb:FormBuilder,
+              private validadores: ValidadoresService) {
     this.crearFormulario();
     this.cargarFormulario();
   }
@@ -34,6 +36,11 @@ export class ReactiveComponent implements OnInit {
     return this.forma.get('email').invalid && this.forma.get('email').touched;
   }
 
+  get usuarioBaneado() {
+    //El signo de interrogación se agrega para evitar que de error si no hay un value
+    return this.forma.get('email').errors?.baneado;
+  }
+
   get distritoNoValido() {
     return this.forma.get('direccion.distrito').invalid && this.forma.get('direccion.distrito').touched;
   }
@@ -48,7 +55,7 @@ export class ReactiveComponent implements OnInit {
       //1 arg = value, 2 = validadores síncronos (En array si son mas de uno), 3 = validadores asíncronos
       nombre:    ['', [ Validators.required, Validators.minLength(3) ]],
       apellido:  ['', [ Validators.required, Validators.minLength(3) ]],
-      email:     ['', [Validators.required, Validators.pattern('[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$') ]],
+      email: ['', [Validators.required, Validators.pattern('[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$'), this.validadores.usuarioBanneado ]],
       //dirección es un objeto anidado dentro del formulario
       direccion: this.fb.group({
         distrito: ['', Validators.required],
@@ -78,7 +85,7 @@ export class ReactiveComponent implements OnInit {
 
   llenarFormulario() {
     // this.forma.reset({
-    this.forma.setValue({
+    this.forma.reset({
       nombre: 'Sheev',
       apellido: 'Palpatine',
       email: 'iamthesenate@sith.com',
@@ -100,6 +107,7 @@ export class ReactiveComponent implements OnInit {
 
   guardar(){
     console.log(this.forma);
+    console.log(this.usuarioBaneado);
     if (this.forma.invalid) {
       //Se itera con el obejeto forma para marcar todos los inputs como touched si el formulario es inválido
       return Object.values( this.forma.controls ).forEach( control => {

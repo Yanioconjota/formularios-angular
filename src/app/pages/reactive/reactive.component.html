@@ -47,7 +47,9 @@
              formControlName="email"
              [class.is-invalid]="emailNoValido">
       <small class="text-danger"
-              *ngIf="emailNoValido">Ingrese un email válido</small>
+              *ngIf="emailNoValido && !usuarioBaneado">Ingrese un email válido</small>
+      <small class="text-danger"
+              *ngIf="usuarioBaneado">usuario baneado</small>
     </div>
   </div>
 
