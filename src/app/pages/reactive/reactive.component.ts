@@ -84,7 +84,7 @@ export class ReactiveComponent implements OnInit {
   }
 
   llenarFormulario() {
-    // this.forma.reset({
+    // this.forma.setValue({
     this.forma.reset({
       nombre: 'Sheev',
       apellido: 'Palpatine',
