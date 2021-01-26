@@ -53,6 +53,36 @@
     </div>
   </div>
 
+  <div class="form-group row">
+    <label class="col-2 col-form-label">Contraseña</label>
+    <div class="col">
+
+      <input class="form-control"
+             type="password"
+             name="pass1"
+             placeholder="Contraseña"
+             formControlName="pass1"
+             [class.is-invalid]="pass1NoValido">
+      <small class="text-danger"
+              *ngIf="pass1NoValido">Debe ingresar una contraseña válida</small>
+    </div>
+  </div>
+
+  <div class="form-group row">
+    <label class="col-2 col-form-label">Repetir Contraseña</label>
+    <div class="col">
+
+      <input class="form-control"
+             type="password"
+             name="pass1"
+             placeholder="Repetir Contraseña"
+             formControlName="pass2"
+             [class.is-invalid]="pass2NoValido">
+      <small class="text-danger"
+              *ngIf="pass2NoValido">La contraseña no coincide</small>
+    </div>
+  </div>
+
   <!-- formGroupName le dice a angular que este tag es la referencia de un objeto anidado del formulario del componente -->
   <div class="form-group row" formGroupName="direccion">
     <label class="col-2 col-form-label">Dirección</label>
@@ -141,7 +171,7 @@
 </form>
 
 <hr>
-<pre [ngClass]="{'text-danger border-danger' : forma.status === 'INVALID' && forma.touched,
+<pre [ngClass]="{'text-danger border-danger' : forma.status === 'INVALID',
      'text-info border-success' : forma.status === 'VALID'}"
      class="bg-light border rounded text-dark p-3 mt-5">
   Estado del formulario: {{ forma.valid }}
@@ -149,7 +179,7 @@
   Status: {{ forma.status }}
 </pre>
 
-<pre [ngClass]="{'text-danger border-danger' : forma.status === 'INVALID' && forma.touched,
+<pre [ngClass]="{'text-danger border-danger' : forma.status === 'INVALID',
      'text-success border-success' : forma.status === 'VALID'}"
      class="bg-light border rounded text-dark p-3">
   {{ forma.value | json }}
