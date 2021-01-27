@@ -36,6 +36,10 @@ export class ReactiveComponent implements OnInit {
     return this.forma.get('email').invalid && this.forma.get('email').touched;
   }
 
+  get usuarioNoValido() {
+    return this.forma.get('usuario').invalid && this.forma.get('usuario').touched;
+  }
+
   get usuarioBaneado() {
     //El signo de interrogación se agrega para evitar que de error si no hay un value
     return this.forma.get('email').errors?.baneado;
@@ -66,6 +70,7 @@ export class ReactiveComponent implements OnInit {
       nombre:    ['', [ Validators.required, Validators.minLength(3) ]],
       apellido:  ['', [ Validators.required, Validators.minLength(3) ]],
       email: ['', [Validators.required, Validators.pattern('[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$'), this.validadores.usuarioBanneado ]],
+      usuario: ['', ,this.validadores.existeUsuario],
       pass1: ['', Validators.required],
       pass2: ['', Validators.required],
       //dirección es un objeto anidado dentro del formulario
@@ -87,6 +92,7 @@ export class ReactiveComponent implements OnInit {
       nombre: 'Sheev',
       apellido: 'Palpatine',
       email: 'iamthesenate@sith.com',
+      usuario: 'therealemperor',
       direccion: {
         distrito: 'Naboo',
         ciudad: 'Quilmes'
@@ -103,6 +109,7 @@ export class ReactiveComponent implements OnInit {
       nombre: 'Sheev',
       apellido: 'Palpatine',
       email: 'iamthesenate@sith.com',
+      usuario: 'therealemperor',
       direccion: {
         distrito: 'Naboo',
         ciudad: 'Quilmes'
